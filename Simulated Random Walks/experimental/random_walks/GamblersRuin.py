@@ -179,3 +179,64 @@ def graph_simulate_GamblersRuin(n,X_0,prob_coin,speed,state,n_steps):
         anim = FuncAnimation(fig, update_GamblersRuin_ns, fargs=(n, P, x, y,graph,state,n_steps,freq_list,prob_list), frames=None,interval=rate,cache_frame_data=False)
         plt.grid()
         plt.show()
+        
+def simulate_GamblersRuin_HittingTime(n,X_0,prob_coin, n_experiments): #Inf bound is used to test theorical results (default=0)
+    n_steps=n_experiments
+    P=TransitionMatrix_GamblersRuin(n,X_0,prob_coin)
+    tau_list=[]
+    XT_list=[]
+    if 0<=X_0 and X_0<=n:
+        for I in range (1,n_steps+1):        
+            n=len(P[0,:])
+            X=X_0
+            freq=np.linspace(0,n-1,n); prob=np.linspace(0,n-1,n)
+            print(f'HittingTime Experiment I={I}')
+            print(f't',end='\t')
+            print(f'X_t',end='\t')
+            for i in range(0,n):
+                print(f'f({int(freq[i])})',end=' \t')
+            for i in range(0,n):
+                if i<n-1:   
+                    print(f'p({prob[i]})',end=' \t')
+                else:
+                    print(f'p({prob[i]})')
+            freq=np.zeros(n); prob=np.zeros(n)            
+            freq[int(X)]+=1
+            for j in range(n):
+                prob[j]=round(freq[j],3)  #in this case sum of probabilities is equal to (i+1)
+            rowtext_simulate_markov_chain(f't={0}',f'{int(X)}',freq,prob)
+            i=1; 
+            while i>=0:
+                X=np.random.choice(np.linspace(0,n-1,n), p=P[int(X),:])           
+                freq[int(X)]+=1
+                for j in range(n):
+                    prob[j]=round(freq[j]/(i+1),3)  #in this case sum of probabilities is equal to (i+1)
+                rowtext_simulate_markov_chain(f't={i}',f'{int(X)}',freq,prob)
+                if X==0 or X==n-1:
+                    tau_list.append(i)
+                    XT_list.append(X)
+                    i=-1
+                else:
+                    i=i+1
+            print('\n================================')
+        T=np.array(tau_list);XT=np.array(XT_list)
+        T_max=T.max(); n=n-1 
+        print(f'HittingTime Experiment Summary')
+        print('T',end='\t'); print('f(T)',end='\t') ; print('F(T)',end='\t') ;  print(f'|X_T={n}|',end='\t') ; print(f'p_k(T={n})')
+        total=0
+        freq_XT=0
+        for i in range(0,T_max+1):
+            freq_i=0
+            for j in range(0,len(T)):
+                if i==T[j]:
+                    freq_i+=1
+                    if XT[j]==n:#condition to estimate the probability
+                        freq_XT+=1
+            total=total+freq_i      
+            if total==0:
+                print(f'{i}',end='\t'); print(f'{freq_i}',end='\t') ; print(f'{total}',end='\t') ; print(f'{freq_XT}',end='\t'); print(f'{0:.3f}')
+            else:
+                print(f'{i}',end='\t'); print(f'{freq_i}',end='\t') ; print(f'{total}',end='\t') ; print(f'{freq_XT}',end='\t'); print(f'{freq_XT/total:.3f}')
+        print(f'T_mean: {T.mean()}')
+    else:
+        print('Initial state out of range')

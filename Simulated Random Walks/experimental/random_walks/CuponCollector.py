@@ -8,8 +8,7 @@ import csv
 import experimental.random_walks.miscellaneous.markov_misc_func as markov_misc
 from experimental.Markov import *
 from experimental.random_walks.GamblersRuin import *
-# from miscellaneous.markov_misc_func import *
-# from miscellaneous.markov_misc_func import rowtext_simulate_markov_chain
+
 def simulate_CuponCollector_stopped(P, X_0):
     n=len(P[0,:]); i=0
     X = []    
@@ -182,7 +181,7 @@ def graph_simulate_CuponCollector(number_of_coupons,X_0,speed,state,n_steps):
         plt.grid()
         plt.show()
         
-def simulate_CuponCollector_HittingTime(number_of_coupons,X_0,T_inf_bound, n_experiments):
+def simulate_CuponCollector_HittingTime(number_of_coupons,X_0,T_inf_bound, n_experiments): #Inf bound is used to test theorical results (default=0)
     n=number_of_coupons
     n_steps=n_experiments
     P=cupon_matrix(n)
@@ -193,7 +192,15 @@ def simulate_CuponCollector_HittingTime(number_of_coupons,X_0,T_inf_bound, n_exp
             X=X_0
             freq=np.linspace(0,n-1,n); prob=np.linspace(0,n-1,n)
             print(f'HittingTime Experiment I={I}')
-            rowtext_simulate_markov_chain(f't',f'X_t',freq,prob)
+            print(f't',end='\t')
+            print(f'X_t',end='\t')
+            for i in range(0,n):
+                print(f'f({int(freq[i])})',end=' \t')
+            for i in range(0,n):
+                if i<n-1:   
+                    print(f'p({prob[i]})',end=' \t')
+                else:
+                    print(f'p({prob[i]})')
             freq=np.zeros(n); prob=np.zeros(n)            
             freq[int(X)]+=1
             for j in range(n):
@@ -224,7 +231,7 @@ def simulate_CuponCollector_HittingTime(number_of_coupons,X_0,T_inf_bound, n_exp
                 if i==T[j]:
                     freq_i+=1
             total=total+freq_i
-            if i>=T_inf_bound:
+            if i>=T_inf_bound:  #condition to estimate the probability
                 freq_bound=freq_bound+freq_i
             if total==0:
                 print(f'{i}',end='\t'); print(f'{freq_i}',end='\t') ; print(f'{total}',end='\t') ; print(f'{freq_bound}',end='\t'); print(f'{0:.3f}')

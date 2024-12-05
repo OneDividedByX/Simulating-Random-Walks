@@ -77,7 +77,7 @@ def simulate_RandomWalkInZxZ_1(XY_0):
 #         else:
 #             t=-1
             
-def update_RandomWalkInZxZ_1(frame,t,x,y,XY,graph,state):
+def update_RandomWalkInZxZ_1(frame,t,x,y,XY,graph,state,annotate):
     # updating the data
     XY_available=available_adjacent_Points_1(XY[-1],XY)
     if len(XY_available)>0:
@@ -94,9 +94,10 @@ def update_RandomWalkInZxZ_1(frame,t,x,y,XY,graph,state):
             plt.plot(x[-1],y[-1],'ro')
         elif state=='non_discrete':
             plt.plot(x[-1],y[-1])
-        plt.annotate(f'{t[-1]}',xy)
+        if annotate==True:
+            plt.annotate(f'{t[-1]}',xy) 
 
-def graph_RandomWalkInZxZ_1(XY_0,speed,state):
+def graph_RandomWalkInZxZ_1(XY_0,speed,state,annotate):
     if speed>0:
         rate=1/speed*1000
     else: rate=200
@@ -108,7 +109,7 @@ def graph_RandomWalkInZxZ_1(XY_0,speed,state):
     plt.plot(x,y,'co')
     plt.annotate(f'{0}',XY_0)
     # plt.ylim(y_min,y_max)
-    anim = FuncAnimation(fig, update_RandomWalkInZxZ_1, fargs=(t,x, y,XY,graph,state), frames=None,interval=rate,cache_frame_data=False)
+    anim = FuncAnimation(fig, update_RandomWalkInZxZ_1, fargs=(t,x, y,XY,graph,state,annotate), frames=None,interval=rate,cache_frame_data=False)
     plt.grid()
     plt.show()      
 ##############################################################
@@ -162,7 +163,7 @@ def simulate_RandomWalkInZxZ_2(XY_0,speed,n_steps):
             XY.append(XY_t)
             t=t+1
             print(f't={t} \t {XY[-1]}') 
-def update_RandomWalkInZxZ_2(frame,t,x,y,XY,walk,graph,state):
+def update_RandomWalkInZxZ_2(frame,t,x,y,XY,walk,graph,state,annotate):
     # updating the data
     XY_available=available_adjacent_Points_2(XY[-1],walk)
     walk.append(XY[-1])
@@ -179,9 +180,10 @@ def update_RandomWalkInZxZ_2(frame,t,x,y,XY,walk,graph,state):
         plt.plot(x[-1],y[-1],'ro')
     elif state=='non_discrete':
         plt.plot(x[-1],y[-1])
-    plt.annotate(f'{t[-1]}',xy)
+    if annotate==True:
+        plt.annotate(f'{t[-1]}',xy) 
 
-def graph_RandomWalkInZxZ_2(XY_0,speed,state):
+def graph_RandomWalkInZxZ_2(XY_0,speed,state,annotate):
     if speed>0:
         rate=1/speed*1000
     else: rate=200
@@ -193,7 +195,7 @@ def graph_RandomWalkInZxZ_2(XY_0,speed,state):
     plt.plot(x,y,'co')
     plt.annotate(f'{0}',XY_0)
     # plt.ylim(y_min,y_max)
-    anim = FuncAnimation(fig, update_RandomWalkInZxZ_2, fargs=(t,x, y,XY,walk,graph,state), frames=None, interval=rate,cache_frame_data=False)
+    anim = FuncAnimation(fig, update_RandomWalkInZxZ_2, fargs=(t,x, y,XY,walk,graph,state,annotate), frames=None, interval=rate,cache_frame_data=False)
     plt.grid()
     plt.show() 
     

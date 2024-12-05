@@ -59,11 +59,9 @@ def simulate_GamblersRuin(n,X_0,prob_coin,speed,n_steps):
                 else:
                     print(f'p({int(prob[i])})')    
             freq=np.zeros(n); prob=np.zeros(n)            
-            freq[int(X)]+=1
-            for j in range(n):
-                prob[j]=round(freq[j]/(i+1),3)  #in this case sum of probabilities is equal to (i+1)
+            freq[int(X)]+=1; prob[int(X)]+=1
             rowtext_simulate_markov_chain(f't={0}',f'{int(X)}',freq,prob)
-            i=0; 
+            i=1; 
             while i>=0:
                 X=np.random.choice(np.linspace(0,n-1,n), p=P[int(X),:])           
                 freq[int(X)]+=1
@@ -116,7 +114,7 @@ def update_GamblersRuin(frame,n,P,x,y,graph,state,freq_list,prob_list):
         freq=freq_list[-1]; prob=prob_list[-1]
         freq[int(y[-1])]+=1
         for j in range(n):
-            prob[j]=round(freq[j]/(x[-1]),3)  #in this case sum of probabilities is equal to (i+1)
+            prob[j]=round(freq[j]/(x[-1]+1),3)  #in this case sum of probabilities is equal to (i+1)
         rowtext_simulate_markov_chain(f't={x[-1]}',f'{int(y[-1])}',freq,prob)
 
 def update_GamblersRuin_ns(frame,n,P,x,y,graph,state,n_steps,freq_list,prob_list):

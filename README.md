@@ -1,0 +1,2 @@
+- Simple program to simulate the evolution of some random walks
+- There are only two main types of functions: "simulate_" and "graph_", which purposes are specified in "Read.txt"

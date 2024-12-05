@@ -1,0 +1,2 @@
+- "simulate" functions just print the processes as a table and depending of "n_steps" value the table type is displayed.
+- "graph" functions make the same as its "simulate" respective functions but also they display simultaneously the respective graph of the process in execution.

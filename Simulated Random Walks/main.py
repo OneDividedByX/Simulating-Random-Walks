@@ -36,20 +36,28 @@ prob_coin =np.array([0.5,0.5])
 
 ################################################################################
 ################################################################################
-# XY_0=np.array([0,0]); speed=10
-# graph_RandomWalkInZxZ_1(XY_0,speed,'discrete')
-# simulate_RandomWalkInZxZ_2(XY_0,speed=10,n_steps=10)
-# graph_RandomWalkInZxZ_2(XY_0,speed,'discrete')
+XY_0=np.array([0,0]); speed=10
+# graph_RandomWalkInZxZ_1(XY_0,speed,'discrete',annotate=True)
+graph_RandomWalkInZxZ_2(XY_0,speed,'discrete',annotate=True)
 
-# ################################################################################
-# ################################################################################
+################################################################################
+################################################################################
 # prob=np.array([0.43,0.1,0.47])
 # # simulate_RandomWalkInZ(0,prob,0)
 # graph_RandomWalkInZ(X_0,prob,1,'discrete')
 
+################################################################################
+################################################################################
+n=10; X_0=5
+prob_coin =np.array([0.5,0.5])
+# simulate_GamblersRuin(n=n,X_0=X_0,prob_coin=prob_coin,speed=2,n_steps='stopped')
+# graph_simulate_GamblersRuin(n=n,X_0=X_0,prob_coin=prob_coin,speed=2,state='discrete',n_steps=None)
+# simulate_GamblersRuin_HittingTime(n=n,X_0=X_0,prob_coin=prob_coin,n_experiments=1000)
+
+################################################################################
+################################################################################
+
 # simulate_CuponCollector(10, 0,1,n_steps=None)
 # graph_simulate_CuponCollector(10,0,speed=10,state='discrete',n_steps=None)
-# simulate_CuponCollector_HittingTime(number_of_coupons=10,X_0=0, T_inf_bound=34,n_experiments=10)
+# simulate_CuponCollector_HittingTime(number_of_coupons=10,X_0=0, T_inf_bound=35,n_experiments=1000)
 
-prob_coin =np.array([0.5,0.5])
-simulate_GamblersRuin_HittingTime(8,4,prob_coin,1000)
